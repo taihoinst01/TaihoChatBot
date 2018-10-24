@@ -195,7 +195,7 @@ namespace TaihoChatBotV3.DB
                 cmd.CommandText += " 	A.DLG_LANG,                             ";
                 cmd.CommandText += " 	A.DLG_TYPE,                             ";
                 cmd.CommandText += " 	A.DLG_ORDER_NO,                         ";
-                cmd.CommandText += " 	A.DLG_GROUP                             ";
+                cmd.CommandText += " 	A.DLG_GROUP,                             ";
                 cmd.CommandText += " 	B.GESTURE                               ";
                 cmd.CommandText += " FROM TBL_DLG A, TBL_DLG_RELATION_LUIS B    ";
                 cmd.CommandText += " WHERE A.DLG_ID = B.DLG_ID                  ";
@@ -824,11 +824,13 @@ namespace TaihoChatBotV3.DB
                 conn.Open();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText += "SELECT  LUIS_ID, LUIS_INTENT, LUIS_ENTITIES, ISNULL(DLG_ID,0) AS DLG_ID, DLG_API_DEFINE, API_ID ";
-                cmd.CommandText += "  FROM  TBL_DLG_RELATION_LUIS                                                    ";
+                cmd.CommandText += "SELECT  A.LUIS_ID, A.LUIS_INTENT, A.LUIS_ENTITIES, ISNULL(A.DLG_ID,0) AS DLG_ID, A.DLG_API_DEFINE, A.API_ID  ";
+                cmd.CommandText += " FROM  TBL_DLG_RELATION_LUIS       A, TBL_DLG B                              ";
                 //cmd.CommandText += " WHERE  LUIS_ENTITIES = @entities                                                ";
-                cmd.CommandText += " WHERE  LUIS_INTENT = @intent                                                ";
-                cmd.CommandText += " AND  LUIS_ENTITIES = @entities                                                ";
+                cmd.CommandText += " WHERE  A.LUIS_INTENT = @intent                                                ";
+                cmd.CommandText += " AND  A.LUIS_ENTITIES = @entities                                                ";
+                cmd.CommandText += " AND A.DLG_ID = B.DLG_ID                                                ";
+                cmd.CommandText += " ORDER BY B.DLG_ORDER_NO ASC                                                ";
 
                 Debug.WriteLine("query : " + cmd.CommandText);
                 Debug.WriteLine("entity : " + entity);
