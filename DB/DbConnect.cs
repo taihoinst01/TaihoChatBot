@@ -744,6 +744,42 @@ namespace TaihoChatBotV3.DB
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        public List<RelationList> DefineTypeChkSpare(string entity)
+        {
+            SqlDataReader rdr = null;
+            List<RelationList> result = new List<RelationList>();
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText += "SELECT  A.LUIS_ID, A.LUIS_INTENT, A.LUIS_ENTITIES, ISNULL(A.DLG_ID,0) AS DLG_ID, A.DLG_API_DEFINE, A.API_ID ";
+                cmd.CommandText += "  FROM  TBL_DLG_RELATION_LUIS  A , TBl_DLG B                                                  ";
+                cmd.CommandText += " WHERE A.LUIS_ENTITIES = @entities                                                ";
+                cmd.CommandText += " AND A.DLG_ID = B.DLG_ID                                                ";
+                cmd.CommandText += " ORDER BY B.DLG_ORDER_NO ASC                                                ";
+
+                Debug.WriteLine("query : " + cmd.CommandText);
+                cmd.Parameters.AddWithValue("@entities", entity);
+
+                rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (rdr.Read())
+                {
+                    RelationList relationList = new RelationList();
+                    relationList.luisId = rdr["LUIS_ID"] as string;
+                    relationList.luisIntent = rdr["LUIS_INTENT"] as string;
+                    relationList.luisEntities = rdr["LUIS_ENTITIES"] as string;
+                    relationList.dlgId = Convert.ToInt32(rdr["DLG_ID"]);
+                    relationList.dlgApiDefine = rdr["DLG_API_DEFINE"] as string;
+                    //relationList.apiId = Convert.ToInt32(rdr["API_ID"] ?? 0);
+                    relationList.apiId = rdr["API_ID"].Equals(DBNull.Value) ? 0 : Convert.ToInt32(rdr["API_ID"]);
+                    //DBNull.Value
+                    result.Add(relationList);
+                }
+            }
+            return result;
+        }
+
 
         public List<RelationList> DefineTypeChk(string luisId, string intentId, string entitiesId)
         {

@@ -422,7 +422,13 @@ namespace TaihoChatBotV3
 
                         String fullentity = db.SearchCommonEntities;
                         DButil.HistoryLog("fullentity : " + fullentity);
-                        if (apiFlag.Equals("COMMON"))
+
+                        if (!string.IsNullOrEmpty(fullentity) || !fullentity.Equals(""))
+                        {
+                            relationList = db.DefineTypeChkSpare(fullentity);
+                        }
+
+                         else if (apiFlag.Equals("COMMON"))
                         {
                             relationList = db.DefineTypeChkSpare(cacheList.luisIntent, cacheList.luisEntities);
                         }
