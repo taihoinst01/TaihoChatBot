@@ -862,8 +862,8 @@ namespace TaihoChatBotV3.DB
                 cmd.Connection = conn;
                 cmd.CommandText += "SELECT  A.LUIS_ID, A.LUIS_INTENT, A.LUIS_ENTITIES, ISNULL(A.DLG_ID,0) AS DLG_ID, A.DLG_API_DEFINE, A.API_ID  ";
                 cmd.CommandText += " FROM  TBL_DLG_RELATION_LUIS       A, TBL_DLG B                              ";
-                //cmd.CommandText += " WHERE  LUIS_ENTITIES = @entities                                                ";
-                cmd.CommandText += " WHERE  A.LUIS_INTENT = @intent                                                ";
+                cmd.CommandText += " WHERE  1 = 1                                                ";
+                cmd.CommandText += " and  A.LUIS_INTENT = @intent                                                ";
                 cmd.CommandText += " AND  A.LUIS_ENTITIES = @entities                                                ";
                 cmd.CommandText += " AND A.DLG_ID = B.DLG_ID                                                ";
                 cmd.CommandText += " ORDER BY B.DLG_ORDER_NO ASC                                                ";
@@ -891,6 +891,50 @@ namespace TaihoChatBotV3.DB
             }
             return result;
         }
+
+
+        //public List<RelationList> DefineTypeChkSpare( string entity)
+        //{
+        //    SqlDataReader rdr = null;
+        //    List<RelationList> result = new List<RelationList>();
+        //    entity = Regex.Replace(entity, " ", "");
+        //    using (SqlConnection conn = new SqlConnection(connStr))
+        //    {
+        //        conn.Open();
+        //        SqlCommand cmd = new SqlCommand();
+        //        cmd.Connection = conn;
+        //        cmd.CommandText += "SELECT  A.LUIS_ID, A.LUIS_INTENT, A.LUIS_ENTITIES, ISNULL(A.DLG_ID,0) AS DLG_ID, A.DLG_API_DEFINE, A.API_ID  ";
+        //        cmd.CommandText += " FROM  TBL_DLG_RELATION_LUIS       A, TBL_DLG B                              ";
+        //        cmd.CommandText += " WHERE  1 = 1                                                ";
+        //        //cmd.CommandText += " and  A.LUIS_INTENT = @intent                                                ";
+        //        cmd.CommandText += " AND  A.LUIS_ENTITIES = @entities                                                ";
+        //        cmd.CommandText += " AND A.DLG_ID = B.DLG_ID                                                ";
+        //        cmd.CommandText += " ORDER BY B.DLG_ORDER_NO ASC                                                ";
+
+        //        Debug.WriteLine("query : " + cmd.CommandText);
+        //        Debug.WriteLine("entity : " + entity);
+        //        //Debug.WriteLine("intent : " + intent);
+        //        //cmd.Parameters.AddWithValue("@intent", intent);
+        //        cmd.Parameters.AddWithValue("@entities", entity);
+
+        //        rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+        //        while (rdr.Read())
+        //        {
+        //            RelationList relationList = new RelationList();
+        //            relationList.luisId = rdr["LUIS_ID"] as string;
+        //            relationList.luisIntent = rdr["LUIS_INTENT"] as string;
+        //            relationList.luisEntities = rdr["LUIS_ENTITIES"] as string;
+        //            relationList.dlgId = Convert.ToInt32(rdr["DLG_ID"]);
+        //            relationList.dlgApiDefine = rdr["DLG_API_DEFINE"] as string;
+        //            //relationList.apiId = Convert.ToInt32(rdr["API_ID"] ?? 0);
+        //            relationList.apiId = rdr["API_ID"].Equals(DBNull.Value) ? 0 : Convert.ToInt32(rdr["API_ID"]);
+        //            //DBNull.Value
+        //            result.Add(relationList);
+        //        }
+        //    }
+        //    return result;
+        //}
+
 
 
         //KSO END
@@ -1301,28 +1345,37 @@ namespace TaihoChatBotV3.DB
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
 
-                cmd.CommandText += "	SELECT ";
-                cmd.CommandText += "        ISNULL(MAX(CASE WHEN POS = 1 THEN VAL1 END), '') ";
-                cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 2 THEN ',' + VAL1 END), '') ";
-                cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 3 THEN ',' + VAL1 END), '') ";
-                cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 4 THEN ',' + VAL1 END), '') ";
-                cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 5 THEN ',' + VAL1 END), '') ";
-                cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 6 THEN ',' + VAL1 END), '') ";
-                cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 7 THEN ',' + VAL1 END), '') ";
-                cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 8 THEN ',' + VAL1 END), '') AS VAL ";
-                cmd.CommandText += "        FROM ";
-                cmd.CommandText += "            ( ";
-                cmd.CommandText += "                SELECT VAL1, POS ";
-                cmd.CommandText += "                FROM Split2(@entities, ',') ";
-                cmd.CommandText += "            ) A                             ";
+                cmd.CommandText += "SELECT RESULT AS ENTITIES FROM FN_ENTITYSUM_ORDERBY_ADD(@entities) ";
+
+                //cmd.CommandText += "	SELECT ";
+                //cmd.CommandText += "        ISNULL(MAX(CASE WHEN POS = 1 THEN VAL1 END), '') ";
+                //cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 2 THEN ',' + VAL1 END), '') ";
+                //cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 3 THEN ',' + VAL1 END), '') ";
+                //cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 4 THEN ',' + VAL1 END), '') ";
+                //cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 5 THEN ',' + VAL1 END), '') ";
+                //cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 6 THEN ',' + VAL1 END), '') ";
+                //cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 7 THEN ',' + VAL1 END), '') ";
+                //cmd.CommandText += "        + ISNULL(MAX(CASE WHEN POS = 8 THEN ',' + VAL1 END), '') AS VAL ";
+                //cmd.CommandText += "        FROM ";
+                //cmd.CommandText += "            ( ";
+                //cmd.CommandText += "                SELECT VAL1, POS ";
+                //cmd.CommandText += "                FROM Split2(@entities, ',') ";
+                //cmd.CommandText += "            ) A                             ";
 
                 cmd.Parameters.AddWithValue("@entities", entities);
 
                 rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
-                while (rdr.Read())
+                try
                 {
-                    newMsg = rdr["VAL"] as string;
+                    while (rdr.Read())
+                    {
+                        newMsg += rdr["ENTITIES"] as string;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
                 }
             }
             return newMsg;

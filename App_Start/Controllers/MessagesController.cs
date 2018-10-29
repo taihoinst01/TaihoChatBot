@@ -350,7 +350,7 @@ namespace TaihoChatBotV3
                         {
                             DButil.HistoryLog("cache none : " + orgMent);
                             //루이스 체크
-                            cacheList.luisId = dbutil.GetMultiLUIS(orgMent);
+                            cacheList.luisEntities = dbutil.GetMultiLUIS(orgMent);
                         }
 
                         if (cacheList != null && cacheList.luisIntent != null)
@@ -428,9 +428,18 @@ namespace TaihoChatBotV3
                             relationList = db.DefineTypeChkSpare(fullentity);
                         }
 
-                         else if (apiFlag.Equals("COMMON"))
+                        else if (apiFlag.Equals("COMMON"))
                         {
-                            relationList = db.DefineTypeChkSpare(cacheList.luisIntent, cacheList.luisEntities);
+                            if(string.IsNullOrEmpty(luisIntent))
+                            {
+                                relationList = db.DefineTypeChkSpare(luisEntities);
+                            }
+                            else
+                            {
+                                relationList = db.DefineTypeChkSpare(cacheList.luisIntent, cacheList.luisEntities);
+                            }
+                            
+
                         }
                         else
                         {
