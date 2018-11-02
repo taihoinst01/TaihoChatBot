@@ -1789,11 +1789,12 @@ namespace TaihoChatBotV3
                                 List<CardImage> cardImages = new List<CardImage>();
                                 cardImages.Add(new CardImage(url: icon_url));
 
-                                HeroCard plCard = new HeroCard()
+                                UserHeroCard plCard = new UserHeroCard()
                                 {
                                     Subtitle = weather,
                                     Text = temperature_string,
-                                    Images = cardImages
+                                    Images = cardImages,
+                                    Card_division = "img"
                                 };
                                 Attachment plAttachment = plCard.ToAttachment();
                                 weatherReply.Attachments.Add(plAttachment);
