@@ -367,7 +367,7 @@ namespace TaihoChatBotV3
                         Activity reply_ment = activity.CreateReply();
                         reply_ment.Recipient = activity.From;
                         reply_ment.Type = "message";
-                        reply_ment.Text = bannedMsg.cardText;
+                        //reply_ment.Text = bannedMsg.cardText;
 
                         //var reply_ment_info = await connector.Conversations.SendToConversationAsync(reply_ment);
                         //response = Request.CreateResponse(HttpStatusCode.OK);
@@ -388,10 +388,6 @@ namespace TaihoChatBotV3
 
                         SetActivity(reply_ment);
                         replyresult = "D";
-
-
-
-
 
 
                     }
