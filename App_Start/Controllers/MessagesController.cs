@@ -1993,7 +1993,7 @@ namespace TaihoChatBotV3
             else if (message.Type == ActivityTypes.ConversationUpdate)
             {
             }
-            else if (message.Type == ActivityTypes.ContactRelationUpdate)
+            else if (message.Type == ActivityTypes.ContactRelationUpdate) 
             {
             }
             else if (message.Type == ActivityTypes.Typing)
