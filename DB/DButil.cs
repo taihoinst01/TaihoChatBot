@@ -890,7 +890,7 @@ namespace TaihoChatBotV3.DB
             DirectoryInfo diDir = new DirectoryInfo(strDir);
 
             //파일 있는지 확인 있을때(true), 없으면(false)
-            FileInfo fileInfo = new FileInfo(strPath + url2 + "," + url1 + ".png");
+            FileInfo fileInfo = new FileInfo(@"D:\home\site\wwwroot\image\map\" + url2 + "," + url1 + ".png");
 
              HistoryLog("fileInfo : " + fileInfo);
 
