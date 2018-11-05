@@ -232,19 +232,19 @@ namespace TaihoChatBotV3
                 }
 
                 ////현재위치사용승인 테스트
-                //Activity replyLocation = activity.CreateReply();
-                //replyLocation.Recipient = activity.From;
-                //replyLocation.Type = "message";
-                //replyLocation.Attachments = new List<Attachment>();
-                //replyLocation.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                Activity replyLocation = activity.CreateReply();
+                replyLocation.Recipient = activity.From;
+                replyLocation.Type = "message";
+                replyLocation.Attachments = new List<Attachment>();
+                replyLocation.AttachmentLayout = AttachmentLayoutTypes.Carousel;
 
-                //replyLocation.Attachments.Add(
-                //    GetHeroCard_facebookMore(
-                //    "", "",
-                //    "현재 위치 사용 승인",
-                //    new CardAction(ActionTypes.ImBack, "현재 위치 사용 승인", value: MessagesController.queryStr))
-                //);
-                //await connector.Conversations.SendToConversationAsync(replyLocation);
+                replyLocation.Attachments.Add(
+                    GetHeroCard_facebookMore(
+                    "", "",
+                    "현재 위치 사용 승인",
+                    new CardAction(ActionTypes.ImBack, "현재 위치 사용 승인", value: MessagesController.queryStr))
+                );
+                await connector.Conversations.SendToConversationAsync(replyLocation);
 
                 DateTime endTime = DateTime.Now;
                 Debug.WriteLine("프로그램 수행시간 : {0}/ms", ((endTime - startTime).Milliseconds));
@@ -320,36 +320,36 @@ namespace TaihoChatBotV3
 
 
 
-                    //if (queryStr.Contains("current location") || orgMent.Equals("현재 위치 사용 승인"))
-                    //{
-                    //    DButil.HistoryLog("1111111");
-                    //    if (!queryStr.Contains(':'))
-                    //    {
-                    //        //첫번쨰 메세지 출력 x
-                    //        response = Request.CreateResponse(HttpStatusCode.OK);
-                    //        return response;
-                    //    }
-                    //    else
-                    //    {
-                    //        //위도경도에 따른 값 출력
-                    //        try
-                    //        {
-                    //            string regionStr = "";
-                    //            string location = queryStr;
-                    //            //테스트용
-                    //            //string location = "129.0929788:35.2686635";
-                    //            string[] location_result = location.Split(':');
-                    //            //regionStr = db.LocationValue(location_result[1], location_result[2]);
-                    //            DButil.HistoryLog("*regionStr : " + location_result[1] + " " + location_result[2]);
-                    //            DButil.mapSave("https://openapi.naver.com/v1/map/staticmap.bin?clientId=dXUekyWEBhyYa2zD2s33&url=file:///C:/Users/user/Desktop&crs=EPSG:4326&center=127.1141382,37.3599968&level=10&w=320&h=320&baselayer=default&markers=127.1141382,37.3599968");
-                    //            queryStr = regionStr + " 시승센터";
-                    //        }
-                    //        catch
-                    //        {
-                    //            queryStr = "서울 시승센터";
-                    //        }
-                    //    }
-                    //}
+                    if (queryStr.Contains("current location") || orgMent.Equals("현재 위치 사용 승인") || orgMent.Contains("current location"))
+                    {
+                        DButil.HistoryLog("1111111");
+                        if (!queryStr.Contains(':'))
+                        {
+                            //첫번쨰 메세지 출력 x
+                            response = Request.CreateResponse(HttpStatusCode.OK);
+                            return response;
+                        }
+                        else
+                        {
+                            //위도경도에 따른 값 출력
+                            try
+                            {
+                                string regionStr = "";
+                                string location = queryStr;
+                                //테스트용
+                                //string location = "129.0929788:35.2686635";
+                                string[] location_result = location.Split(':');
+                                //regionStr = db.LocationValue(location_result[1], location_result[2]);
+                                DButil.HistoryLog("*regionStr : " + location_result[1] + " " + location_result[2]);
+                                DButil.mapSave("https://openapi.naver.com/v1/map/staticmap.bin?clientId=dXUekyWEBhyYa2zD2s33&url=file:///C:/Users/user/Desktop&crs=EPSG:4326&center=127.1141382,37.3599968&level=10&w=320&h=320&baselayer=default&markers=127.1141382,37.3599968");
+                                queryStr = regionStr + " 시승센터";
+                            }
+                            catch
+                            {
+                                queryStr = "서울 시승센터";
+                            }
+                        }
+                    }
 
                     apiFlag = "COMMON";
 
