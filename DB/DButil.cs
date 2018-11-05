@@ -857,7 +857,7 @@ namespace TaihoChatBotV3.DB
             return heroCard.ToAttachment();
         }
         //지도 맵 추가
-        public static Attachment GetHeroCard_Map(string title, string subtitle, string text, CardImage cardImage, CardAction cardAction /*List<CardAction> buttons*/, string latitude, string longitude, string cardDivision)
+        public static Attachment GetHeroCard_Map(string title, string subtitle, string text, CardImage cardImage, /*CardAction cardAction List<CardAction> buttons,*/ string latitude, string longitude, string cardDivision)
         {
             var heroCard = new UserHeroCard
             {
@@ -865,7 +865,7 @@ namespace TaihoChatBotV3.DB
                 Subtitle = subtitle,
                 Text = text,
                 Images = new List<CardImage>() { cardImage },
-                Buttons = new List<CardAction>() { cardAction },
+                //Buttons = new List<CardAction>() { cardAction },
                 Latitude = latitude,
                 Longitude = longitude,
                 Card_division = cardDivision

@@ -300,8 +300,7 @@ namespace TaihoChatBotV3
                                     "그랜드 힐튼 서울",
                                     "전화번호 : 02-3216-5656",
                                     "주소 : 서울특별시 서대문구 연희로 353",
-                                    new CardImage(url: "https://taihochatbotv3.azurewebsites.net/image/map/" + location_result[2] + "," + location_result[1] + ".png"),
-                                    new CardAction(),
+                                    new CardImage(url: "https://taihochatbotv3.azurewebsites.net/image/map/" + location_result[2] + "," + location_result[1] + ".png"),                                    
                                     location_result[1],
                                     location_result[0],
                                     "img")
