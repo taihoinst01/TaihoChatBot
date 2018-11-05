@@ -883,6 +883,8 @@ namespace TaihoChatBotV3.DB
 
             System.Drawing.Image image = DownloadImageFromUrl(url);
 
+            HistoryLog("AppDomain.CurrentDomain.BaseDirectory : " + AppDomain.CurrentDomain.BaseDirectory);
+
             string m_strLogPrefix = AppDomain.CurrentDomain.BaseDirectory + @"image\map\";
             string m_strLogExt = @".png";
             string strPath = String.Format("{0}", m_strLogPrefix);
