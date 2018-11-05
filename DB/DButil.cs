@@ -883,16 +883,16 @@ namespace TaihoChatBotV3.DB
 
             System.Drawing.Image image = DownloadImageFromUrl(url);
 
-            HistoryLog("AppDomain.CurrentDomain.BaseDirectory : " + AppDomain.CurrentDomain.BaseDirectory);
-
             string m_strLogPrefix = AppDomain.CurrentDomain.BaseDirectory + @"image\map\";
             string m_strLogExt = @".png";
-            string strPath = String.Format("{0}", m_strLogPrefix);
+            string strPath = String.Format("{0}{1}", m_strLogPrefix, m_strLogExt);
             string strDir = Path.GetDirectoryName(strPath);
             DirectoryInfo diDir = new DirectoryInfo(strDir);
 
             //파일 있는지 확인 있을때(true), 없으면(false)
             FileInfo fileInfo = new FileInfo(strPath + url2 + "," + url1 + ".png");
+
+             HistoryLog("fileInfo : " + fileInfo);
 
             if (!fileInfo.Exists)
             {
@@ -900,12 +900,10 @@ namespace TaihoChatBotV3.DB
                 try
                 {
                     image.Save(fileName);
-                    DButil.HistoryLog("*img : " + fileName);
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine("***error***" + ex.Message);
-                    DButil.HistoryLog("***error***" + ex.Message);
                 }
             }
 
