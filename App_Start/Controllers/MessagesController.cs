@@ -270,7 +270,7 @@ namespace TaihoChatBotV3
 
                     if (queryStr.Contains("current location") || orgMent.Equals("현재 위치 사용 승인") || orgMent.Contains("current location"))
                     {
-                        DButil.HistoryLog("1111111");
+                        DButil.HistoryLog("orgMent==="+ orgMent);
                         if (!orgMent.Contains(':'))
                         {
                             //첫번쨰 메세지 출력 x
