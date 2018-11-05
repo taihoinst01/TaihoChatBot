@@ -304,7 +304,7 @@ namespace TaihoChatBotV3
                                     new CardAction(ActionTypes.OpenUrl, "현재위치", value: "http://www.taihoinst.com/"),
                                     location_result[1],
                                     location_result[0],
-                                    "map")
+                                    "img")
                                     );
 
                                 var reply_map1 = await connector.Conversations.SendToConversationAsync(reply_map);
