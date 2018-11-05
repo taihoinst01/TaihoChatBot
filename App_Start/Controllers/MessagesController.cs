@@ -268,62 +268,10 @@ namespace TaihoChatBotV3
 
                     //현재위치사용승인
 
-                    //if (queryStr.Contains("current location") || orgMent.Equals("현재 위치 사용 승인") || orgMent.Contains("current location"))
-                    //{
-                    //    DButil.HistoryLog("1111111");
-                    //    if (!orgMent.Contains(':'))
-                    //    {
-                    //        //첫번쨰 메세지 출력 x
-                    //        response = Request.CreateResponse(HttpStatusCode.OK);
-                    //        return response;
-                    //    }
-                    //    else
-                    //    {
-                    //        //위도경도에 따른 값 출력
-                    //        try
-                    //        {
-                    //            string regionStr = "";
-                    //            string location = orgMent;
-                    //            //테스트용
-                    //            //string location = "129.0929788:35.2686635";
-                    //            string[] location_result = location.Split(':');
-                    //            //regionStr = db.LocationValue(location_result[1], location_result[2]);
-                    //            DButil.HistoryLog("*regionStr : " + location_result[1] + " " + location_result[2]);
-                    //            DButil.mapSave(location_result[1], location_result[2]);
-                    //            Activity reply_map = activity.CreateReply();
-                    //            reply_map.Recipient = activity.From;
-                    //            reply_map.Type = "message";
-                    //            reply_map.Attachments = new List<Attachment>();
-                    //            reply_map.AttachmentLayout = AttachmentLayoutTypes.Carousel;
-                    //            reply_map.Attachments.Add(
-                    //                DButil.GetHeroCard_Map(
-                    //                "타이호인스트",
-                    //                "연락처",
-                    //                "주소",
-                    //                new CardImage(url: "https://taihochatbotv3.azurewebsites.net/image/map/" + location_result[2] + "," + location_result[1] + ".png"),
-                    //                new CardAction(ActionTypes.OpenUrl, "현재위치", value: "http://www.taihoinst.com/"),
-                    //                location_result[1],
-                    //                location_result[0],
-                    //                "img")
-                    //                );
-
-                    //            var reply_map1 = await connector.Conversations.SendToConversationAsync(reply_map);
-                    //            response = Request.CreateResponse(HttpStatusCode.OK);
-                    //            return response;
-                    //        }
-                    //        catch
-                    //        {
-                    //            queryStr = "서울 시승센터";
-                    //        }
-                    //    }
-                    //}
-
-
-
                     if (queryStr.Contains("current location") || orgMent.Equals("현재 위치 사용 승인") || orgMent.Contains("current location"))
                     {
-                        DButil.HistoryLog("queryStr===" + queryStr);
-                        if (!queryStr.Contains(':'))
+                        DButil.HistoryLog("1111111");
+                        if (!orgMent.Contains(':'))
                         {
                             //첫번쨰 메세지 출력 x
                             response = Request.CreateResponse(HttpStatusCode.OK);
@@ -335,14 +283,33 @@ namespace TaihoChatBotV3
                             try
                             {
                                 string regionStr = "";
-                                string location = queryStr;
+                                string location = orgMent;
                                 //테스트용
                                 //string location = "129.0929788:35.2686635";
                                 string[] location_result = location.Split(':');
                                 //regionStr = db.LocationValue(location_result[1], location_result[2]);
                                 DButil.HistoryLog("*regionStr : " + location_result[1] + " " + location_result[2]);
-                                DButil.mapSave("https://openapi.naver.com/v1/map/staticmap.bin?clientId=dXUekyWEBhyYa2zD2s33&url=https://taihochatbotv3web.azurewebsites.net&crs=EPSG:4326&center=127.1141382,37.3599968&level=10&w=320&h=320&baselayer=default&markers=127.1141382,37.3599968");
-                                queryStr = regionStr + " 시승센터";
+                                DButil.mapSave(location_result[1], location_result[2]);
+                                Activity reply_map = activity.CreateReply();
+                                reply_map.Recipient = activity.From;
+                                reply_map.Type = "message";
+                                reply_map.Attachments = new List<Attachment>();
+                                reply_map.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                                reply_map.Attachments.Add(
+                                    DButil.GetHeroCard_Map(
+                                    "타이호인스트",
+                                    "연락처",
+                                    "주소",
+                                    new CardImage(url: "https://taihochatbotv3.azurewebsites.net/image/map/" + location_result[2] + "," + location_result[1] + ".png"),
+                                    new CardAction(ActionTypes.OpenUrl, "현재위치", value: "http://www.taihoinst.com/"),
+                                    location_result[1],
+                                    location_result[0],
+                                    "img")
+                                    );
+
+                                var reply_map1 = await connector.Conversations.SendToConversationAsync(reply_map);
+                                response = Request.CreateResponse(HttpStatusCode.OK);
+                                return response;
                             }
                             catch
                             {
@@ -350,6 +317,39 @@ namespace TaihoChatBotV3
                             }
                         }
                     }
+
+
+
+                    //if (queryStr.Contains("current location") || orgMent.Equals("현재 위치 사용 승인"))
+                    //{
+                    //    DButil.HistoryLog("1111111");
+                    //    if (!queryStr.Contains(':'))
+                    //    {
+                    //        //첫번쨰 메세지 출력 x
+                    //        response = Request.CreateResponse(HttpStatusCode.OK);
+                    //        return response;
+                    //    }
+                    //    else
+                    //    {
+                    //        //위도경도에 따른 값 출력
+                    //        try
+                    //        {
+                    //            string regionStr = "";
+                    //            string location = queryStr;
+                    //            //테스트용
+                    //            //string location = "129.0929788:35.2686635";
+                    //            string[] location_result = location.Split(':');
+                    //            //regionStr = db.LocationValue(location_result[1], location_result[2]);
+                    //            DButil.HistoryLog("*regionStr : " + location_result[1] + " " + location_result[2]);
+                    //            DButil.mapSave("https://openapi.naver.com/v1/map/staticmap.bin?clientId=dXUekyWEBhyYa2zD2s33&url=file:///C:/Users/user/Desktop&crs=EPSG:4326&center=127.1141382,37.3599968&level=10&w=320&h=320&baselayer=default&markers=127.1141382,37.3599968");
+                    //            queryStr = regionStr + " 시승센터";
+                    //        }
+                    //        catch
+                    //        {
+                    //            queryStr = "서울 시승센터";
+                    //        }
+                    //    }
+                    //}
 
                     apiFlag = "COMMON";
 

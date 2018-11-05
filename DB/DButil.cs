@@ -857,7 +857,7 @@ namespace TaihoChatBotV3.DB
             return heroCard.ToAttachment();
         }
         //지도 맵 추가
-        public static Attachment GetHeroCard_Map(string title, string subtitle, string text, CardImage cardImage, /*CardAction cardAction*/ List<CardAction> buttons, string latitude, string longitude)
+        public static Attachment GetHeroCard_Map(string title, string subtitle, string text, CardImage cardImage, CardAction cardAction /*List<CardAction> buttons*/, string latitude, string longitude, string cardDivision)
         {
             var heroCard = new UserHeroCard
             {
@@ -865,41 +865,47 @@ namespace TaihoChatBotV3.DB
                 Subtitle = subtitle,
                 Text = text,
                 Images = new List<CardImage>() { cardImage },
-                Buttons = buttons,
+                Buttons = new List<CardAction>() { cardAction },
                 Latitude = latitude,
                 Longitude = longitude,
+                Card_division = cardDivision
             };
 
             return heroCard.ToAttachment();
         }
 
-        public static void mapSave(string url)
+        public static void mapSave(string url1, string url2)
         {
+            //로컬테스트
+            //string url = "https://openapi.naver.com/v1/map/staticmap.bin?clientId=dXUekyWEBhyYa2zD2s33&url=file:///C:/Users/user/Desktop&crs=EPSG:4326&center=" + url2 + "," + url1 + "&level=10&w=320&h=320&baselayer=default&markers="+ url2 +"," + url1;
+            //웹테스트
+            string url = "https://openapi.naver.com/v1/map/staticmap.bin?clientId=dXUekyWEBhyYa2zD2s33&url=https://taihochatbotv3web.azurewebsites.net&crs=EPSG:4326&center=" + url2 + "," + url1 + "&level=10&w=320&h=320&baselayer=default&markers=" + url2 + "," + url1;
+
             System.Drawing.Image image = DownloadImageFromUrl(url);
 
             string m_strLogPrefix = AppDomain.CurrentDomain.BaseDirectory + @"image\map\";
             string m_strLogExt = @".png";
-            string strPath = String.Format("{0}{1}", m_strLogPrefix, m_strLogExt);
+            string strPath = String.Format("{0}", m_strLogPrefix);
             string strDir = Path.GetDirectoryName(strPath);
             DirectoryInfo diDir = new DirectoryInfo(strDir);
 
-            HistoryLog("1111");
-            if (!diDir.Exists)
-            {
-                HistoryLog("2222");
-                diDir.Create();
-                diDir = new DirectoryInfo(strDir);
-            }
-            HistoryLog("3333");
-            if (diDir.Exists)
-            {
-                HistoryLog("4444");
-                //string rootPath = @"C:\DownloadedImageFromUrl";
-                string fileName = System.IO.Path.Combine(strPath, "test.png");
-                image.Save(fileName);
+            //파일 있는지 확인 있을때(true), 없으면(false)
+            FileInfo fileInfo = new FileInfo(strPath + url2 + "," + url1 + ".png");
 
+            if (!fileInfo.Exists)
+            {
+                string fileName = System.IO.Path.Combine(strDir, url2 + "," + url1 + ".png");
+                try
+                {
+                    image.Save(fileName);
+                    DButil.HistoryLog("*img : " + fileName);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("***error***" + ex.Message);
+                    DButil.HistoryLog("***error***" + ex.Message);
+                }
             }
-            HistoryLog("5555");
 
         }
 
