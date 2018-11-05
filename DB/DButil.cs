@@ -894,6 +894,12 @@ namespace TaihoChatBotV3.DB
 
              HistoryLog("fileInfo : " + fileInfo);
 
+            if (!diDir.Exists)
+            {
+                diDir.Create();
+                diDir = new DirectoryInfo(strDir);
+            }
+
             if (!fileInfo.Exists)
             {
                 string fileName = System.IO.Path.Combine(strDir, url2 + "," + url1 + ".png");
