@@ -297,11 +297,11 @@ namespace TaihoChatBotV3
                                 reply_map.AttachmentLayout = AttachmentLayoutTypes.Carousel;
                                 reply_map.Attachments.Add(
                                     DButil.GetHeroCard_Map(
-                                    "타이호인스트",
-                                    "연락처",
-                                    "주소",
+                                    "그랜드 힐튼 서울",
+                                    "전화번호 : 02-3216-5656",
+                                    "주소 : 서울특별시 서대문구 연희로 353",
                                     new CardImage(url: "https://taihochatbotv3.azurewebsites.net/image/map/" + location_result[2] + "," + location_result[1] + ".png"),
-                                    new CardAction(ActionTypes.OpenUrl, "현재위치", value: "http://www.taihoinst.com/"),
+                                    new CardAction(),
                                     location_result[1],
                                     location_result[0],
                                     "img")
@@ -1818,6 +1818,37 @@ namespace TaihoChatBotV3
                                 weatherReply.Attachments.Add(plAttachment);
 
                                 SetActivity(weatherReply);
+                                replyresult = "D";
+
+
+                            }
+                            else if (relationList[0].luisEntities.Equals("시간"))
+                            {
+
+                                string currentTime = null;
+
+                                //Debug.WriteLine("현재 시간은 " + DateTime.Now.ToString("yyyy")+ "년 " + DateTime.Now.ToString("MM") + "월 " + DateTime.Now.ToString("dd") + "일  " +
+                                //    DateTime.Now.ToString("hh") + "시 " + DateTime.Now.ToString("mm") + "분 " + DateTime.Now.ToString("ss") + "초 입니다. ");
+                                currentTime = "현재 시간은 " + DateTime.Now.ToString("yyyy") + "년 " + DateTime.Now.ToString("MM") + "월 " + DateTime.Now.ToString("dd") + "일  " +
+                                    DateTime.Now.ToString("hh") + "시 " + DateTime.Now.ToString("mm") + "분 " + DateTime.Now.ToString("ss") + "초 입니다. ";
+
+                                Activity currentTimeReply = activity.CreateReply();
+                                currentTimeReply.Recipient = activity.From;
+                                currentTimeReply.Type = "message";
+                                currentTimeReply.Attachments = new List<Attachment>();
+                                currentTimeReply.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+
+
+                                UserHeroCard plCard = new UserHeroCard()
+                                {
+
+                                    Text = currentTime
+
+                                };
+                                Attachment plAttachment = plCard.ToAttachment();
+                                currentTimeReply.Attachments.Add(plAttachment);
+
+                                SetActivity(currentTimeReply);
                                 replyresult = "D";
 
 
