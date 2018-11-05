@@ -1786,7 +1786,7 @@ namespace TaihoChatBotV3
                                 {
 
                                     weather = "날씨 : " + node["weather"].InnerText;
-                                    temperature_string = "온도 : " + node["temperature_string"].InnerText;
+                                    temperature_string = "온도 는 " + node["temp_c"].InnerText + "입니다.";
                                     icon_url = node["icon_url"].InnerText;
 
 
@@ -1810,7 +1810,7 @@ namespace TaihoChatBotV3
                                 UserHeroCard plCard = new UserHeroCard()
                                 {
                                     Subtitle = weather,
-                                    Text = temperature_string,
+                                    Text = "현재 날씨를 알려드릴께요. 현재 날씨는 " + temperature_string + "입니다. "+ temperature_string,
                                     Images = cardImages,
                                     Card_division = "img"
                                 };
