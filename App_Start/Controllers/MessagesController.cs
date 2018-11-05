@@ -1785,7 +1785,7 @@ namespace TaihoChatBotV3
                                 foreach (XmlNode node in nodes)
                                 {
 
-                                    weather = "날씨 : " + node["weather"].InnerText;
+                                    weather = node["weather"].InnerText;
                                     temperature_string = "온도 는 " + node["temp_c"].InnerText + "입니다.";
                                     icon_url = node["icon_url"].InnerText;
 
