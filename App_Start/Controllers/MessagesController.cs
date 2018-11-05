@@ -1809,8 +1809,8 @@ namespace TaihoChatBotV3
 
                                 UserHeroCard plCard = new UserHeroCard()
                                 {
-                                    Subtitle = weather,
-                                    Text = "현재 날씨를 알려드릴께요. 현재 날씨는 " + temperature_string + "입니다. "+ temperature_string,
+                                    //Subtitle = weather,
+                                    Text = "현재 날씨를 알려드릴께요. 현재 날씨는 " + weather + "입니다. "+ temperature_string,
                                     Images = cardImages,
                                     Card_division = "img"
                                 };
