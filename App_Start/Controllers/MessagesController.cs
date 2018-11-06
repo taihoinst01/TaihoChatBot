@@ -1821,7 +1821,7 @@ namespace TaihoChatBotV3
 
 
                             }
-                            else if (relationList[0].luisEntities.Equals("시간"))
+                            else if (relationList[0].luisEntities.Equals("시간") || relationList[0].luisEntities.Equals("시간,현재"))
                             {
 
                                 string currentTime = null;
